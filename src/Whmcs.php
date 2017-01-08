@@ -141,7 +141,7 @@ class Whmcs
         $params = array_merge([
             'username' => $this->adminUserName,
             'password' => md5($this->adminUserPassword),
-            'responseType' => $this->responseType,
+            'responsetype' => $this->responseType,
         ], $params);
 
         $ch = curl_init();
