@@ -19,6 +19,11 @@ class Whmcs
     protected $adminUserPassword;
 
     /**
+     * @var
+     */
+    protected $apiKey;
+
+    /**
      * @var mixed
      */
     protected $apiUrl;
@@ -45,6 +50,10 @@ class Whmcs
 
         if (array_key_exists('admin_password', $options)) {
             $this->adminUserPassword = $options['admin_password'];
+        }
+
+        if (array_key_exists('api_key', $options)) {
+            $this->apiKey = $options['api_key'];
         }
 
         if (array_key_exists('api_url', $options)) {
@@ -101,6 +110,14 @@ class Whmcs
     }
 
     /**
+     * @param mixed $apiKey
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+    }
+
+    /**
      * @return mixed
      */
     public function getResponse()
@@ -139,9 +156,10 @@ class Whmcs
     public function request($params)
     {
         $params = array_merge([
-            'username' => $this->adminUserName,
-            'password' => md5($this->adminUserPassword),
+            'username' => ($this->adminUserName) ? $this->adminUserName : null,
+            'password' => ($this->adminUserPassword) ? md5($this->adminUserPassword) : null,
             'responsetype' => $this->responseType,
+            'accesskey' => ($this->apiKey) ? $this->apiKey : null
         ], $params);
 
         $ch = curl_init();
