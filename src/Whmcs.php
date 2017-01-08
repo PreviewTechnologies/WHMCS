@@ -146,8 +146,13 @@ class Whmcs
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->apiUrl);
-        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POST, count($params));
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
-        return $this->response = curl_exec($ch);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        $this->response = curl_exec($ch);
+        curl_close($ch);
+
+        return $this->response;
     }
 }

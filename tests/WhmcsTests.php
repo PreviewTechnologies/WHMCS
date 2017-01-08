@@ -28,7 +28,9 @@ class WhmcsTests extends PHPUnit_Framework_TestCase
             'stats' => 'true'
         ];
 
-        $this->assertTrue(is_array($this->whmcsClient->request($params)));
+        $result = $this->whmcsClient->request($params);
+
+        $this->assertNotEmpty($result);
     }
 
     public function testConfigFile()
